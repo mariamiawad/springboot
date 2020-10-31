@@ -1,5 +1,6 @@
 package com.javatpoint;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
@@ -14,13 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 class StudentController {
 	@Autowired
 	StudentService studentService;
-	
+
 	@PostMapping("/calc")
 	@ResponseBody
-	public Date[] date(@RequestParam("startDate") @DateTimeFormat(pattern = "dd.MM.yyyy") Date date,
-			@RequestParam("session") int session, @RequestParam("days") List<Integer> days) {
-		return studentService.date(date, session, days); }
-	
-	
+	public List<String> date(@RequestParam("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date date,
+			@RequestParam("session") int session, @RequestParam("days") int[] days) throws ParseException {
+		return studentService.date(date, days, session);
+	}
 
 }
